@@ -1,0 +1,11 @@
+img2 = cv2.imread('./images/RIGHT/test.jpg')
+h, w = img2.shape[:2]
+newcameramtx, roi = cv2.getOptimalNewCameraMatrix(self.M1, self.d1, (w, h), 1, (w, h))  # 自由比例参数
+dst = cv2.undistort(img2, self.M1, self.d1, None, newcameramtx)
+# 根据前面ROI区域裁剪图片
+x, y, w, h = roi
+dst = dst[y:y + h, x:x + w]
+cv2.imshow('fin', dst)
+cv2.imwrite('./fin.png', dst)
+cv2.waitKey()
+cv2.destroyAllWindows()
