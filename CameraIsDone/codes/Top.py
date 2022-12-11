@@ -40,8 +40,8 @@ while (True):
     if k == ord('q'):
         break
     elif k == ord('s'):
-        cv2.imwrite('./Merge/images/color_Detected' + str(index) + '.jpg', CDor.Area)
-        scio.savemat('./Merge/images/Depth_map' + str(index) + '.mat', {'Depth': Depth.DepthMap})
+        cv2.imwrite('./CameraIsDone/RecordedFiles/images/color_Detected' + str(index) + '.jpg', CDor.Area)
+        scio.savemat('./CameraIsDone/RecordedFiles/DepthMaps/Depth_map' + str(index) + '.mat', {'Depth': Depth.DepthMap})
         index += 1
 cam2.release() # 释放摄像头
 cam0.release() # 释放摄像头
