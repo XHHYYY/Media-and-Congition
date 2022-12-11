@@ -1,0 +1,5 @@
+*.zip
+*.pth
+Files/
+.DS_Store
+__pycache__
