@@ -144,7 +144,7 @@ class Depth():
         return depthMap.astype(np.float32)
 
 
-    def get_Depth(self, iml: np.ndarray, imr: np.ndarray, mode: bool) -> None:
+    def get_Depth(self, iml: np.ndarray, imr: np.ndarray, mode: str) -> None:
 
         height, width = iml.shape[0:2]
         

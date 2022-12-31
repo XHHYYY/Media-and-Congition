@@ -3,3 +3,4 @@
 Files/
 .DS_Store
 __pycache__
+*.jpg
