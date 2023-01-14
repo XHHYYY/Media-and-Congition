@@ -25,16 +25,17 @@ def depth_show(winname, DepthMap):
     depthMapVis = (255.0 *(DepthMap - minDepth)) / (maxDepth - minDepth)
     depthMapVis = depthMapVis.astype(np.uint8)
     cv2.imshow(winname, depthMapVis)
-    cv2.waitKey()
-    cv2.destroyAllWindows()
+
 
 class PostProcess():
+    #Fast Fill with bilateral blur, no extrapolation
     def __init__(self):
         self.fill_type = 'fast'
         self.extrapolate = False
         self.blur_type = 'bilateral'
 
     def process(self, depth_img):
+        # full_in_fast and full_in_multiscale take grayscale image as input
         minDepth = np.min(depth_img)
         maxDepth = np.max(depth_img)
         depthMapVis = (255.0 *(depth_img - minDepth)) / (maxDepth - minDepth)
@@ -56,6 +57,8 @@ if __name__ == '__main__':
     depth_img_mat = scio.loadmat("./StereoCalibration/images/Depth_map1.mat")
     depth_img = depth_img_mat['Depth']
     Processer = PostProcess()
-    #depth_show('Depth', depth_img)
+    depth_show('Depth', depth_img)
     processed_img = Processer.process(depth_img=depth_img)
-    #depth_show('processed', processed_img)
+    depth_show('processed', processed_img)
+    cv2.waitKey()
+    cv2.destroyAllWindows()
