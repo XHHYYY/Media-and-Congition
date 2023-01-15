@@ -171,9 +171,20 @@ class Depth():
             depthMap1 = self.getDepthMapWithQ(disp_l, Q)
             depthMap2 = self.getDepthMapWithConfig(disp_l, config)
             self.DepthMap = (depthMap1 + depthMap2) / 2
-
+        
+        #实例化一个后处理类并应用于计算得到的深度图以减少深度图显示中的空洞
+        #Initialize an PostProcess class and apply it to the depth map to avoid hollows
+        Processer = PostProcess.PostProcess()
+        processed_DepthMap = Processer.process(depth_img=self.DepthMap)    
+           
+        #将深度数据等比例映射到0~255以实现可视化，
+        #Visualize the depth map by mapping the depth data to [0,255]. 
         minDepth = np.min(self.DepthMap)
-        maxDepth = np.max(self.DepthMap)
+        sorted_DepthMap = np.sort(processed_DepthMap.reshape(1,-1))
+        #映射的最大值取第190~200个较大值的平均值以减小噪声影响，使亮度稳定
+        #set the maximum as the average of the 190th to 200th biggest to avoid the effect of noise and make the brightness stable
+        maxDepth_top10 = sorted_DepthMap[0,-200:-190]
+        maxDepth = np.mean(maxDepth_top10)
         depthMapVis = (255.0 *(self.DepthMap - minDepth)) / (maxDepth - minDepth)
         self.depthMapVis = depthMapVis.astype(np.uint8)
 
